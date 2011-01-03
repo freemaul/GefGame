@@ -37,7 +37,7 @@ gmp_version="4.3.2"
 mpfr_version="2.4.2"
 mpc_version="0.8.1"
 gcc_version="4.5.1"
-gcc_version="3.4.0"
+#gcc_version="3.4.0"
 
 #gcc_core_win_version="4.5.0-1"
 #gcc_core_win_arch="gcc-core-4.5.0-1-mingw32-bin.tar.lzma"
@@ -123,6 +123,13 @@ build_binutils()
 
 build_gmp()
 {
+	## Test if binutils already install
+	check=`ls $target/include/ 2>/dev/null | grep gmp.h`
+	if [[ $check != "" ]]; then
+		echo "gmp already install, bypass"
+		return 0;
+	fi
+
 	## Download gmp
 	download "ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-$gmp_version.tar.bz2" || { return 1; }
 	## Extract gmp
@@ -303,7 +310,7 @@ build()
 	build_binutils || { return 1; }
 	if [[ $temp != "" ]]; then
 		# if target windows, we need mingw
-		build_mingw || { return 1; }
+#		build_mingw || { return 1; }
 		build_gcc_win || { return 1; }
 	else
 		build_gcc_linux || { return 1; }
