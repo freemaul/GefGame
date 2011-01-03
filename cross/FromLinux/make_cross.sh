@@ -31,7 +31,7 @@ win32_version="2.5"
 
 ## Others versions
 binutils_version="2.20.1"
-binutils_version="2.14"
+#binutils_version="2.14"
 
 gmp_version="4.3.2"
 mpfr_version="2.4.2"
@@ -65,6 +65,15 @@ download()
 	cd download
 	wget --continue $1 || { cd .. && return 1; }
 	cd ..
+}
+
+copy_log()
+{
+	mkdir -p logs
+	for file in `find $1 2>/dev/null | grep "\.log"`; do
+		file_log=${file//"/"/"_"}
+		cp -f $file logs/$file_log || { return 1; }
+	done
 }
 
 build_mingw()
@@ -105,6 +114,8 @@ build_binutils()
 	make  || { cd .. && return 1; }
 	make install  || { cd .. && return 1; }
 	cd ..
+	## copy logfiles
+	copy_log binutils-build
 	## Delete build folder and source folder
 	rm -rf binutils-build || { return 1; }
 	rm -rf binutils-$binutils_version || { return 1; }
@@ -126,6 +137,8 @@ build_gmp()
 	make || { cd .. && return 1; }
 	make install || { cd .. && return 1; }
 	cd ..
+	## copy logfiles
+	copy_log gmp_build
 	## Delete build folder and source folder
 	rm -rf gmp_build || { return 1; }
 	rm -rf gmp-$gmp_version || { return 1; }
@@ -148,6 +161,8 @@ build_mpfr()
 	make || { cd .. && return 1; }
 	make install || { cd .. && return 1; }
 	cd ..
+	## copy logfiles
+	copy_log mpfr_build
 	## Delete build folder and source folder
 	rm -rf mpfr_build || { return 1; }
 	rm -rf mpfr-$mpfr_version || { return 1; }
@@ -169,6 +184,8 @@ build_mpc()
 	make || { cd .. && return 1; }
 	make install || { cd .. && return 1; }
 	cd ..
+	## copy logfiles
+	copy_log mpc-build
 	## Delete build folder and source folder
 	rm -rf mpc_build || { return 1; }
 	rm -rf mpc-$mpc_version || { return 1; }
@@ -208,6 +225,8 @@ build_gcc_linux()
 	make || { cd .. && return 1; }
 	make install || { cd .. && return 1; }
 	cd ..
+	## copy logfiles
+	copy_log gcc-build
 	## Delete build folder and source folder
 	rm -rf gcc-build || { return 1; }
 	rm -rf gcc-$gcc_version || { return 1; }
