@@ -184,6 +184,13 @@ build_mpfr()
 
 build_mpc()
 {
+	## Test if mpc already install
+	check=`ls $target/include/ 2>/dev/null | grep "mpc\.h"`
+	if [[ $check != "" ]]; then
+		echo "mpc is already install, bypass"
+		return 0;
+	fi
+
 	## Download mpc
 	download "ftp://gcc.gnu.org/pub/gcc/infrastructure/mpc-$mpc_version.tar.gz" || { return 1; }
 	## Extract mpc
