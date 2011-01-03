@@ -81,8 +81,8 @@ build_mingw()
 	## Download mingw
 
 
-	download http://sourceforge.net/projects/mingw/files/MinGW/BaseSystem/RuntimeLibrary/MinGW-RT/mingw-runtime-3.14/mingw-runtime-3.14.tar.gz/download || { return 1; }
-	download http://sourceforge.net/projects/mingw/files/MinGW/BaseSystem/RuntimeLibrary/Win32-API/w32api-3.13/w32api-3.13-mingw32-dev.tar.gz/download || { return 1; }
+	download http://sourceforge.net/projects/mingw/files/MinGW/BaseSystem/RuntimeLibrary/MinGW-RT/mingw-runtime-3.14/mingw-runtime-3.14.tar.gz || { return 1; }
+	download http://sourceforge.net/projects/mingw/files/MinGW/BaseSystem/RuntimeLibrary/Win32-API/w32api-3.13/w32api-3.13-mingw32-dev.tar.gz || { return 1; }
 
 	mkdir -p $target
 	cd $target
