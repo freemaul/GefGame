@@ -96,7 +96,7 @@ build_binutils()
 	## Test if binutils already install
 	check=`ls $target/bin/ 2>/dev/null | grep $target_config-ld`
 	if [[ $check != "" ]]; then
-		echo "binutils already install, bypass"
+		echo "binutils is already install, bypass"
 		return 0;
 	fi
 
@@ -123,10 +123,10 @@ build_binutils()
 
 build_gmp()
 {
-	## Test if binutils already install
-	check=`ls $target/include/ 2>/dev/null | grep gmp.h`
+	## Test if gmp already install
+	check=`ls $target/include/ 2>/dev/null | grep "gmp\.h"`
 	if [[ $check != "" ]]; then
-		echo "gmp already install, bypass"
+		echo "gmp is already install, bypass"
 		return 0;
 	fi
 
@@ -154,6 +154,13 @@ build_gmp()
 
 build_mpfr()
 {
+	## Test if mpfr already install
+	check=`ls $target/include/ 2>/dev/null | grep "mpfr\.h"`
+	if [[ $check != "" ]]; then
+		echo "mpfr is already install, bypass"
+		return 0;
+	fi
+
 	## download mpfr
 	download "ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-$mpfr_version.tar.bz2" || { return 1; }
 	## Extract mpfr
