@@ -85,7 +85,7 @@ build_mingw()
 build_binutils()
 {
 	## Test if binutils already install
-	check=`ls $target/bin/ | grep $target_config-ld`
+	check=`ls $target/bin/ 2>/dev/null | grep $target_config-ld`
 	if [[ $check != "" ]]; then
 		echo "binutils already install, bypass"
 		return 0;
